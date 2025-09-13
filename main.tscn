@@ -1,46 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://chcuss0cx3wdk"]
+[gd_scene load_steps=10 format=3 uid="uid://chcuss0cx3wdk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_b7tvu"]
-[ext_resource type="PackedScene" uid="uid://c3lrtwiexgey1" path="res://bat.tscn" id="2_yfjol"]
-[ext_resource type="PackedScene" uid="uid://c6wvbkr5fjbqx" path="res://ball.tscn" id="3_h0b33"]
+[ext_resource type="Texture2D" uid="uid://dx4lkn4kaisja" path="res://IMG_3073.PNG" id="2_mta0a"]
+[ext_resource type="Texture2D" uid="uid://1q2yvfftm8ja" path="res://Journalling_Animation1(1).png" id="3_lhx8l"]
+[ext_resource type="Texture2D" uid="uid://7ta1sigkpfhc" path="res://JournalSection.png" id="4_mlhq5"]
+[ext_resource type="Texture2D" uid="uid://bw7chktw5ymq1" path="res://JournalBox.png" id="5_r4ll4"]
+[ext_resource type="FontFile" uid="uid://bwjixo554p8ou" path="res://Semi-Casual.ttf" id="6_6sm10"]
+[ext_resource type="Texture2D" uid="uid://cjn1vvhi4fyyx" path="res://Start Fishin Button.png" id="6_117hh"]
+[ext_resource type="Texture2D" uid="uid://bare6g8sn2s02" path="res://Return Button.png" id="7_nhfe7"]
+[ext_resource type="Script" path="res://TextureButton.gd" id="7_wkmks"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
-anchors_preset = 15
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_b7tvu")
 
-[node name="BG" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 1)
+[node name="Background" type="Node2D" parent="."]
 
-[node name="AspectRatioContainer" type="AspectRatioContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+position = Vector2(253.845, 232.5)
+scale = Vector2(0.469819, 0.469819)
+texture = ExtResource("2_mta0a")
 
-[node name="GameArea" type="ColorRect" parent="AspectRatioContainer"]
-layout_mode = 2
-color = Color(0, 0.333333, 0.243137, 1)
+[node name="Fisher" type="Node2D" parent="."]
 
-[node name="Bat" parent="AspectRatioContainer/GameArea" instance=ExtResource("2_yfjol")]
-position = Vector2(326, 568)
+[node name="JournallingAnimation1(1)" type="Sprite2D" parent="Fisher"]
+position = Vector2(240.078, 183)
+scale = Vector2(0.448692, 0.448692)
+texture = ExtResource("3_lhx8l")
 
-[node name="Ball" parent="AspectRatioContainer/GameArea" instance=ExtResource("3_h0b33")]
-position = Vector2(361, 393)
+[node name="JournalSection" type="Sprite2D" parent="."]
+position = Vector2(251, 687)
+scale = Vector2(0.480324, 0.480324)
+texture = ExtResource("4_mlhq5")
 
-[connection signal="item_rect_changed" from="." to="." method="_on_item_rect_changed"]
-[connection signal="resized" from="." to="." method="_on_resized"]
-[connection signal="resized" from="AspectRatioContainer" to="." method="_on_aspect_ratio_container_resized"]
-[connection signal="item_rect_changed" from="AspectRatioContainer/GameArea" to="." method="_on_game_area_item_rect_changed"]
+[node name="JournalBox" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(250.656, 640.5)
+scale = Vector2(0.519796, 0.410066)
+texture = ExtResource("5_r4ll4")
+
+[node name="TextEdit" type="TextEdit" parent="JournalBox"]
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = 0.048
+anchor_right = 0.961
+anchor_bottom = 0.969
+offset_left = -462.928
+offset_top = -601.176
+offset_right = -472.184
+offset_bottom = -609.428
+theme_override_colors/background_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("6_6sm10")
+theme_override_font_sizes/font_size = 50
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="ReturnHome" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 320.0
+offset_top = 383.0
+offset_right = 492.0
+offset_bottom = 438.0
+texture_normal = ExtResource("7_nhfe7")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="FishingButton" type="TextureButton" parent="."]
+offset_left = 126.0
+offset_top = 408.0
+offset_right = 369.0
+offset_bottom = 514.0
+texture_normal = ExtResource("6_117hh")
+ignore_texture_size = true
+stretch_mode = 4
+script = ExtResource("7_wkmks")
+
+[connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
+[connection signal="pressed" from="FishingButton" to="." method="_on_texture_button_pressed"]
