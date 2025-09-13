@@ -1,42 +1,32 @@
 extends Control
 
-@export var max_aspect: float = 0.75
+@onready var journal_box: Sprite2D = $JournalBox
+@onready var fishing_button: TextureButton = $FishingButton
+@onready var return_home: TextureButton = $ReturnHome
 
-@onready var aspect_ratio_container: AspectRatioContainer = $AspectRatioContainer
-
-@onready var game_area: ColorRect = $AspectRatioContainer/GameArea
-
-@onready var bat: Node2D = $AspectRatioContainer/GameArea/Bat
-
-@onready var ball: Node2D = $AspectRatioContainer/GameArea/Ball
-
+@onready var text_edit: TextEdit = $JournalBox/TextEdit
 
 
 func _ready():
-	_set_aspect()
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color(0, 0, 0, 0)  # RGBA, last value = alpha = 0 = transparent
+	text_edit.add_theme_stylebox_override("normal", style)
+	text_edit.add_theme_stylebox_override("focus", style)
+	text_edit.add_theme_stylebox_override("read_only", style)
+	pass
+
+
+func _on_texture_button_pressed() -> void:
+	journal_box.visible = true
+	fishing_button.visible = false
+	return_home.visible = true
+
+
+func _on_return_home_pressed() -> void:
+	return_home.visible = false
+	journal_box.visible = false
+	fishing_button.visible = true
+	text_edit.text = ""
+	text_edit.set_caret_line(0)
+	text_edit.set_caret_column(0)
 	
-func _set_aspect():
-	var vp_rect = get_viewport_rect()
-	var aspect = vp_rect.size.x / vp_rect.size.y
-	
-	aspect = min(max_aspect, aspect) # don't let it get too wide
-	
-	aspect_ratio_container.ratio = aspect
-	
-	
-
-## resized is sent before _ready
-#func _on_aspect_ratio_container_resized() -> void:
-	#if is_node_ready():
-		#_set_aspect()
-
-
-
-func _on_game_area_item_rect_changed() -> void:
-	bat.area = game_area.get_rect()
-	ball.area = game_area.get_rect()
-
-
-func _on_resized() -> void:
-	if is_node_ready():
-		_set_aspect()
