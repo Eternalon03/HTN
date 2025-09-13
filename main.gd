@@ -6,6 +6,9 @@ extends Control
 
 @onready var text_edit: TextEdit = $JournalBox/TextEdit
 
+@onready var reel_in_button: TextureButton = $ReelInButton
+
+
 
 func _ready():
 	var style = StyleBoxFlat.new()
@@ -17,9 +20,11 @@ func _ready():
 
 
 func _on_texture_button_pressed() -> void:
+	text_edit.editable = true
 	journal_box.visible = true
 	fishing_button.visible = false
 	return_home.visible = true
+	reel_in_button.visible = true
 
 
 func _on_return_home_pressed() -> void:
@@ -29,4 +34,9 @@ func _on_return_home_pressed() -> void:
 	text_edit.text = ""
 	text_edit.set_caret_line(0)
 	text_edit.set_caret_column(0)
+	reel_in_button.visible = false
 	
+
+
+func _on_reel_in_button_pressed() -> void:
+	text_edit.editable = false

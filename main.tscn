@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://chcuss0cx3wdk"]
+[gd_scene load_steps=11 format=3 uid="uid://chcuss0cx3wdk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_b7tvu"]
 [ext_resource type="Texture2D" uid="uid://dx4lkn4kaisja" path="res://IMG_3073.PNG" id="2_mta0a"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cjn1vvhi4fyyx" path="res://Start Fishin Button.png" id="6_117hh"]
 [ext_resource type="Texture2D" uid="uid://bare6g8sn2s02" path="res://Return Button.png" id="7_nhfe7"]
 [ext_resource type="Script" path="res://TextureButton.gd" id="7_wkmks"]
+[ext_resource type="Texture2D" uid="uid://bduhaslus4x7r" path="res://Reel In Button.png" id="10_ay4ok"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -37,9 +38,8 @@ scale = Vector2(0.480324, 0.480324)
 texture = ExtResource("4_mlhq5")
 
 [node name="JournalBox" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(250.656, 640.5)
-scale = Vector2(0.519796, 0.410066)
+position = Vector2(250.656, 605)
+scale = Vector2(0.519796, 0.351485)
 texture = ExtResource("5_r4ll4")
 
 [node name="TextEdit" type="TextEdit" parent="JournalBox"]
@@ -52,6 +52,7 @@ offset_left = -462.928
 offset_top = -601.176
 offset_right = -472.184
 offset_bottom = -609.428
+size_flags_vertical = 4
 theme_override_colors/background_color = Color(1, 1, 1, 0)
 theme_override_fonts/font = ExtResource("6_6sm10")
 theme_override_font_sizes/font_size = 50
@@ -59,25 +60,37 @@ wrap_mode = 1
 scroll_smooth = true
 
 [node name="ReturnHome" type="TextureButton" parent="."]
-visible = false
 layout_mode = 0
-offset_left = 320.0
-offset_top = 383.0
-offset_right = 492.0
-offset_bottom = 438.0
+offset_left = 353.0
+offset_top = 366.0
+offset_right = 525.0
+offset_bottom = 421.0
 texture_normal = ExtResource("7_nhfe7")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="FishingButton" type="TextureButton" parent="."]
-offset_left = 126.0
-offset_top = 408.0
-offset_right = 369.0
-offset_bottom = 514.0
+layout_mode = 0
+offset_left = 130.0
+offset_top = 404.0
+offset_right = 373.0
+offset_bottom = 510.0
 texture_normal = ExtResource("6_117hh")
 ignore_texture_size = true
 stretch_mode = 4
 script = ExtResource("7_wkmks")
 
+[node name="ReelInButton" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 160.0
+offset_top = 825.0
+offset_right = 344.0
+offset_bottom = 894.0
+texture_normal = ExtResource("10_ay4ok")
+ignore_texture_size = true
+stretch_mode = 0
+
 [connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
 [connection signal="pressed" from="FishingButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="ReelInButton" to="." method="_on_reel_in_button_pressed"]
