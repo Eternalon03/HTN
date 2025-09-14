@@ -8,6 +8,7 @@ extends Control
 
 @onready var reel_in_button: TextureButton = $ReelInButton
 
+@onready var animation_player: AnimationPlayer = $Fisher/AnimationPlayer
 
 
 func _ready():
@@ -16,7 +17,7 @@ func _ready():
 	text_edit.add_theme_stylebox_override("normal", style)
 	text_edit.add_theme_stylebox_override("focus", style)
 	text_edit.add_theme_stylebox_override("read_only", style)
-	pass
+	animation_player.play("idle")
 
 
 func _on_texture_button_pressed() -> void:
@@ -35,8 +36,11 @@ func _on_return_home_pressed() -> void:
 	text_edit.set_caret_line(0)
 	text_edit.set_caret_column(0)
 	reel_in_button.visible = false
+	animation_player.play("idle")
 	
 
 
 func _on_reel_in_button_pressed() -> void:
 	text_edit.editable = false
+	animation_player.play("fisher_reel_animation")
+	
