@@ -1,5 +1,17 @@
 extends Control
 
+var fish_emotions = {
+	"Happy": "Molamola:",
+	"Sad": "Guppy:",
+	"Lonely": "Dab:",
+	"Neutral": "Koi:",
+	"Confident": "Lionfish:",
+	"Stressed": "Clownfish:",
+	"Angry": "Triggerfish:",
+	"Excited": "Goldfish:"
+}
+
+
 @onready var journal_box: Sprite2D = $JournalBox
 @onready var fishing_button: TextureButton = $FishingButton
 @onready var return_home: TextureButton = $ReturnHome
@@ -46,6 +58,12 @@ func _on_return_home_pressed() -> void:
 	length_error_warning.visible = false
 	
 
+func find_fish(word):
+	var is_true = false
+	for fish in fish_emotions.values():
+		if word.contains(fish):
+			is_true = true
+	return is_true
 
 func _on_reel_in_button_pressed() -> void:
 	var words = text_edit.text.split(" ", true)  # true removes empty strings
@@ -65,5 +83,26 @@ func _on_reel_in_button_pressed() -> void:
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	print(json)
+	var temp = json["answer"].replace("\n", " ").replace("\n\n", " ")
+	var words_in_answer = temp.split(" ", true)
+	
+	var current_fish = ""
+	var fish_explanation = ""
+	var caught_fish = {}
+	for word in words_in_answer:
+		print(current_fish)
+		if find_fish(word):
+			print("FISH")
+			if current_fish != "":
+				caught_fish[current_fish] = fish_explanation
+			current_fish = word
+			fish_explanation = ""
+		else:
+			fish_explanation += word
+			fish_explanation += " "
+	print("====")
+	print(caught_fish)
 	animation_player.play("idle")
+	
+	
+	
