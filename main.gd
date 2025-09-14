@@ -1,5 +1,10 @@
 extends Control
 
+var all_fish  = {"Clownfish": 1, "Koi": 2}
+
+var return_button_pos_x = 0
+var return_button_pos_y = 0
+
 var fish_emotions = {
 	"Happy": "Molamola:",
 	"Sad": "Guppy:",
@@ -10,6 +15,9 @@ var fish_emotions = {
 	"Angry": "Triggerfish:",
 	"Excited": "Goldfish:"
 }
+
+var on_key = 0
+var caught_fish = {}
 
 
 @onready var journal_box: Sprite2D = $JournalBox
@@ -26,6 +34,17 @@ var fish_emotions = {
 
 @onready var length_error_warning: Label = $LengthErrorWarning
 
+@onready var caught_screen: Control = $CaughtScreen
+@onready var caught_reel_button: TextureButton = $CaughtScreen/CaughtReelButton
+
+@onready var library_button: TextureButton = $LibraryButton
+
+@onready var catches_screen: Control = $CatchesScreen
+
+
+
+
+
 
 
 
@@ -36,9 +55,13 @@ func _ready():
 	text_edit.add_theme_stylebox_override("focus", style)
 	text_edit.add_theme_stylebox_override("read_only", style)
 	animation_player.play("idle")
+	
+	return_button_pos_x = return_home.position.x
+	return_button_pos_y = return_home.position.y
 
 
 func _on_texture_button_pressed() -> void:
+	library_button.visible = false
 	text_edit.editable = true
 	journal_box.visible = true
 	fishing_button.visible = false
@@ -47,6 +70,8 @@ func _on_texture_button_pressed() -> void:
 
 
 func _on_return_home_pressed() -> void:
+	catches_screen.visible = false
+	library_button.visible = true
 	return_home.visible = false
 	journal_box.visible = false
 	fishing_button.visible = true
@@ -75,6 +100,7 @@ func _on_reel_in_button_pressed() -> void:
 		length_error_warning.visible = false
 		text_edit.editable = false
 		return_home.visible = false
+		library_button.visible = true
 		http_request.sentiment_analysis(text_edit.text)
 		animation_player.play("fisher_reel_animation")
 		animation_player.play("fisher_reel_animation_2")
@@ -88,7 +114,6 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 	
 	var current_fish = ""
 	var fish_explanation = ""
-	var caught_fish = {}
 	for word in words_in_answer:
 		print(current_fish)
 		if find_fish(word):
@@ -100,9 +125,49 @@ func _on_http_request_request_completed(result: int, response_code: int, headers
 		else:
 			fish_explanation += word
 			fish_explanation += " "
+	if current_fish != "":
+				caught_fish[current_fish] = fish_explanation
 	print("====")
 	print(caught_fish)
 	animation_player.play("idle")
+	return_home.visible = false
+	journal_box.visible = false
+	fishing_button.visible = true
+	text_edit.text = ""
+	text_edit.set_caret_line(0)
+	text_edit.set_caret_column(0)
+	reel_in_button.visible = false
+	animation_player.play("idle")
+	length_error_warning.visible = false
+	caught_screen.visible = true
+	caught_reel_button.visible = true
+	var key1 = caught_fish.keys()[on_key]
+	on_key += 1
+	caught_screen.set_fish(key1, caught_fish[key1])
 	
 	
 	
+
+
+func _on_caught_reel_button_pressed() -> void:
+	if on_key > caught_fish.keys().size() - 1:
+		caught_reel_button.visible = false
+		caught_screen.visible = false
+		on_key = 0
+		all_fish.merge(caught_fish)  
+		caught_fish = {}
+	else:
+		var key1 = caught_fish.keys()[on_key]
+		on_key += 1
+		caught_screen.set_fish(key1, caught_fish[key1])
+
+
+func _on_library_button_pressed() -> void:
+	catches_screen.visible = true
+	return_home.visible = true
+	return_home.position.x = return_button_pos_x - 190
+	return_home.position.y = return_button_pos_y - 230
+	
+	catches_screen.set_library(all_fish)
+	
+	pass # Replace with function body.

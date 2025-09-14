@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://chcuss0cx3wdk"]
+[gd_scene load_steps=20 format=3 uid="uid://chcuss0cx3wdk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_b7tvu"]
 [ext_resource type="Texture2D" uid="uid://dx4lkn4kaisja" path="res://IMG_3073.PNG" id="2_mta0a"]
@@ -14,8 +14,6 @@
 [ext_resource type="Texture2D" uid="uid://bduhaslus4x7r" path="res://Reel In Button.png" id="10_ay4ok"]
 [ext_resource type="Script" path="res://HTTPRequest.gd" id="13_oay6n"]
 [ext_resource type="PackedScene" uid="uid://dyxcfggvy5g4h" path="res://caught.tscn" id="14_cxgjx"]
-[ext_resource type="Texture2D" uid="uid://bvoxaqk6o6n2b" path="res://KeyboardIcon.svg" id="14_gbft1"]
-[ext_resource type="PackedScene" uid="uid://bdjsfliwpytr2" path="res://Catches.tscn" id="15_srs3h"]
 
 [sub_resource type="Animation" id="Animation_gr3pd"]
 length = 3.0
@@ -142,6 +140,17 @@ theme_override_font_sizes/font_size = 50
 wrap_mode = 1
 scroll_smooth = true
 
+[node name="ReturnHome" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 353.0
+offset_top = 366.0
+offset_right = 525.0
+offset_bottom = 421.0
+texture_normal = ExtResource("7_nhfe7")
+ignore_texture_size = true
+stretch_mode = 0
+
 [node name="FishingButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 130.0
@@ -179,51 +188,11 @@ theme_override_fonts/font = ExtResource("6_6sm10")
 theme_override_font_sizes/font_size = 20
 text = "Please Add an Entry Longer than 5 words"
 
-[node name="LibraryButton" type="TextureButton" parent="."]
-modulate = Color(0.613727, 0.910904, 0.820401, 1)
-layout_mode = 0
-offset_left = 12.0
-offset_top = 346.0
-offset_right = 44.0
-offset_bottom = 378.0
-scale = Vector2(1.36019, 0.760186)
-texture_normal = ExtResource("14_gbft1")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="CatchesScreen" parent="." instance=ExtResource("15_srs3h")]
-visible = false
-layout_mode = 1
-
-[node name="ReturnHome" type="TextureButton" parent="."]
-visible = false
-layout_mode = 0
-offset_left = 353.0
-offset_top = 366.0
-offset_right = 525.0
-offset_bottom = 421.0
-texture_normal = ExtResource("7_nhfe7")
-ignore_texture_size = true
-stretch_mode = 0
-
 [node name="CaughtScreen" parent="." instance=ExtResource("14_cxgjx")]
 visible = false
 layout_mode = 1
 
-[node name="CaughtReelButton" type="TextureButton" parent="CaughtScreen"]
-visible = false
-layout_mode = 0
-offset_left = 130.0
-offset_top = 786.0
-offset_right = 370.0
-offset_bottom = 876.0
-texture_normal = ExtResource("10_ay4ok")
-ignore_texture_size = true
-stretch_mode = 0
-
+[connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
 [connection signal="pressed" from="FishingButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="ReelInButton" to="." method="_on_reel_in_button_pressed"]
 [connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
-[connection signal="pressed" from="LibraryButton" to="." method="_on_library_button_pressed"]
-[connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
-[connection signal="pressed" from="CaughtScreen/CaughtReelButton" to="." method="_on_caught_reel_button_pressed"]
