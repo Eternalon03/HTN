@@ -10,6 +10,12 @@ extends Control
 
 @onready var animation_player: AnimationPlayer = $Fisher/AnimationPlayer
 
+@onready var http_request: HTTPRequest = $HTTPRequest
+
+@onready var length_error_warning: Label = $LengthErrorWarning
+
+
+
 
 func _ready():
 	var style = StyleBoxFlat.new()
@@ -37,10 +43,27 @@ func _on_return_home_pressed() -> void:
 	text_edit.set_caret_column(0)
 	reel_in_button.visible = false
 	animation_player.play("idle")
+	length_error_warning.visible = false
 	
 
 
 func _on_reel_in_button_pressed() -> void:
-	text_edit.editable = false
-	animation_player.play("fisher_reel_animation")
+	var words = text_edit.text.split(" ", true)  # true removes empty strings
+	var word_count = words.size()
 	
+	if word_count < 6:
+		length_error_warning.visible = true
+	else:
+		length_error_warning.visible = false
+		text_edit.editable = false
+		return_home.visible = false
+		http_request.sentiment_analysis(text_edit.text)
+		animation_player.play("fisher_reel_animation")
+		animation_player.play("fisher_reel_animation_2")
+	
+
+
+func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	print(json)
+	animation_player.play("idle")
