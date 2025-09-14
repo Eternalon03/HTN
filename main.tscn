@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://chcuss0cx3wdk"]
+[gd_scene load_steps=19 format=3 uid="uid://chcuss0cx3wdk"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_b7tvu"]
 [ext_resource type="Texture2D" uid="uid://dx4lkn4kaisja" path="res://IMG_3073.PNG" id="2_mta0a"]
@@ -12,28 +12,13 @@
 [ext_resource type="Texture2D" uid="uid://bare6g8sn2s02" path="res://Return Button.png" id="7_nhfe7"]
 [ext_resource type="Script" path="res://TextureButton.gd" id="7_wkmks"]
 [ext_resource type="Texture2D" uid="uid://bduhaslus4x7r" path="res://Reel In Button.png" id="10_ay4ok"]
-
-[sub_resource type="Animation" id="Animation_fekkg"]
-resource_name = "fisher_reel_animation"
-length = 3.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("JournallingAnimation1(1):texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1.2, 1.8, 2.4, 3),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [ExtResource("3_lhx8l"), ExtResource("3_5g2cc"), ExtResource("5_iyau0"), ExtResource("3_5g2cc"), ExtResource("5_iyau0")]
-}
+[ext_resource type="Script" path="res://HTTPRequest.gd" id="13_oay6n"]
 
 [sub_resource type="Animation" id="Animation_gr3pd"]
-length = 0.001
+length = 3.0
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/path = NodePath("JournallingAnimation1(1):texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -42,6 +27,22 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [ExtResource("3_5g2cc")]
+}
+
+[sub_resource type="Animation" id="Animation_fekkg"]
+resource_name = "fisher_reel_animation"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.6, 2, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_lhx8l"), ExtResource("3_5g2cc"), ExtResource("5_iyau0"), ExtResource("3_5g2cc"), ExtResource("5_iyau0")]
 }
 
 [sub_resource type="Animation" id="Animation_gse5r"]
@@ -59,10 +60,28 @@ tracks/0/keys = {
 "values": [ExtResource("3_lhx8l")]
 }
 
+[sub_resource type="Animation" id="Animation_ytn83"]
+resource_name = "fisher_reel_animation_2"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("3_5g2cc"), ExtResource("5_iyau0")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fcg11"]
 _data = {
 "RESET": SubResource("Animation_gr3pd"),
 "fisher_reel_animation": SubResource("Animation_fekkg"),
+"fisher_reel_animation_2": SubResource("Animation_ytn83"),
 "idle": SubResource("Animation_gse5r")
 }
 
@@ -85,7 +104,7 @@ texture = ExtResource("2_mta0a")
 [node name="JournallingAnimation1(1)" type="Sprite2D" parent="Fisher"]
 position = Vector2(240.078, 183)
 scale = Vector2(0.448692, 0.448692)
-texture = ExtResource("3_5g2cc")
+texture = ExtResource("5_iyau0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Fisher"]
 libraries = {
@@ -109,10 +128,10 @@ anchor_left = 0.037
 anchor_top = 0.048
 anchor_right = 0.961
 anchor_bottom = 0.969
-offset_left = -462.928
-offset_top = -601.176
-offset_right = -472.184
-offset_bottom = -609.428
+offset_left = -463.281
+offset_top = -598.74
+offset_right = -472.537
+offset_bottom = -628.992
 size_flags_vertical = 4
 theme_override_colors/background_color = Color(1, 1, 1, 0)
 theme_override_fonts/font = ExtResource("6_6sm10")
@@ -143,7 +162,6 @@ stretch_mode = 4
 script = ExtResource("7_wkmks")
 
 [node name="ReelInButton" type="TextureButton" parent="."]
-visible = false
 layout_mode = 0
 offset_left = 160.0
 offset_top = 825.0
@@ -153,6 +171,23 @@ texture_normal = ExtResource("10_ay4ok")
 ignore_texture_size = true
 stretch_mode = 0
 
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+script = ExtResource("13_oay6n")
+
+[node name="LengthErrorWarning" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 50.0
+offset_top = 800.0
+offset_right = 460.0
+offset_bottom = 828.0
+theme_override_colors/font_color = Color(1, 0.416603, 0.347925, 1)
+theme_override_colors/font_shadow_color = Color(0.245377, 0.442856, 0.550347, 1)
+theme_override_fonts/font = ExtResource("6_6sm10")
+theme_override_font_sizes/font_size = 20
+text = "Please Add an Entry Longer than 5 words"
+
 [connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
 [connection signal="pressed" from="FishingButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="ReelInButton" to="." method="_on_reel_in_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
