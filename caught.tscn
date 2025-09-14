@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl1nbr7skl5yg"]
+
+[ext_resource type="Texture2D" uid="uid://dq6bufyswhmo6" path="res://Star 1.png" id="1_p8fig"]
+[ext_resource type="Texture2D" uid="uid://bw7chktw5ymq1" path="res://JournalBox.png" id="2_pkxts"]
+[ext_resource type="Texture2D" uid="uid://1kb7o7hhiqr2" path="res://Return Home Button.png" id="3_0oqw2"]
+[ext_resource type="Script" path="res://TextureButton.gd" id="4_f6ml7"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 504.0
+offset_bottom = 893.0
+color = Color(0.764706, 0.898039, 0.905882, 1)
+
+[node name="Star1" type="Sprite2D" parent="."]
+position = Vector2(251, 186)
+scale = Vector2(0.424192, 0.424192)
+texture = ExtResource("1_p8fig")
+
+[node name="JournalBox" type="Sprite2D" parent="."]
+position = Vector2(251, 548)
+scale = Vector2(0.440678, 0.440678)
+texture = ExtResource("2_pkxts")
+
+[node name="TextureButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 82.0
+offset_top = 756.0
+offset_right = 733.0
+offset_bottom = 965.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("3_0oqw2")
+script = ExtResource("4_f6ml7")
