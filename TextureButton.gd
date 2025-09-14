@@ -1,5 +1,7 @@
-extends TextureButton
+extends Control # Or whatever your root node type is
 
+func _on_Button_pressed():
+		get_tree().change_scene_to_file("res://main.tscn")
 #
 ## Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
