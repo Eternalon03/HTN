@@ -1,9 +1,9 @@
 # Fish For Thought
-A fishing-themed digital journal that helps you reel in your emotions. Practice mindfulness and jot down your thoughts for new fishy pals!
-https://youtu.be/_w8JkJIDEeA
+A ![fishing-themed digital](https://youtu.be/_w8JkJIDEeA) journal that helps you reel in your emotions. Practice mindfulness and jot down your thoughts for new fishy pals!
+
 <video src="https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e" width="800" />
 
-### Original Devpost Submission to Hack the North 2025: https://devpost.com/software/fish-for-thought
+### Original Devpost Submission to Hack the North 2025: ![Devpost](https://devpost.com/software/fish-for-thought)
 
 ### Inspiration
 Inspired by the tranquil experience that fishing by the shore offers, **Fish for Thought** aims to help users reflect and log what they did and felt throughout their day. 
