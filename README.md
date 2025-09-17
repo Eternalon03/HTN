@@ -3,8 +3,7 @@ A ![fishing-themed digital journal](https://youtu.be/_w8JkJIDEeA) that helps you
 
 <video src="https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e" width="800" />
 
-### Original Devpost Submission to Hack the North 2025: 
-![Devpost](https://devpost.com/software/fish-for-thought)
+### Original Devpost Submission to Hack the North 2025: https://devpost.com/software/fish-for-thought
 
 ### Inspiration
 Inspired by the tranquil experience that fishing by the shore offers, **Fish for Thought** aims to help users reflect and log what they did and felt throughout their day. 
