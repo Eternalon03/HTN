@@ -1,4 +1,4 @@
 # Fish For Thought
 https://youtu.be/_w8JkJIDEeA
-[![embed]([https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e](https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e))
-](https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e)
+
+<video src="https://github.com/rayytsn9/ROBOTT/assets/79029536/62f541aa-aa8c-43f5-9ead-4b7a2e0d7c2a" width="300" />
