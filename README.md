@@ -5,7 +5,7 @@ https://youtu.be/_w8JkJIDEeA
 
 ### Original Devpost Submission to Hack the North 2025: https://devpost.com/software/fish-for-thought
 
-###Inspiration
+### Inspiration
 Inspired by the tranquil experience that fishing by the shore offers, **Fish for Thought** aims to help users reflect and log what they did and felt throughout their day. 
 
 Generally, people love custom experiences. Mildly inspired by the popularity of daily horoscopes, Fish For Thought gives users a custom breakdown of the emotions and things they did that day through a cute journaling interface, intended to be for mobile so it can be done on the go.  
@@ -66,6 +66,6 @@ Fish For Thought uses Martian to decide on the best models given the length of t
 ![gallery](https://github.com/user-attachments/assets/8816e7cd-2b48-4725-aaef-68346f3bc0ae)
 
 
-#### Last Thoughts
+### Last Thoughts
 
 Of course, Fish For Thought is not doing anything AI can't already do. Rather, it's intended to use existing models in a unique and relaxing environment that will allow users to use it to its full potential. User experience is important, and as AI gets more and more integrated into our lives, it's important to think about *how* we want to integrate it and what customization could people want. What makes it unique is the interactive, playful environment that turns AI from a tool into a character you can engage with. By embedding AI into a game, users get real-time, personalized responses that feel alive, creating a sense of companionship and whimsy. The game format
