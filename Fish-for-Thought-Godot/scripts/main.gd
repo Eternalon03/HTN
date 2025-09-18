@@ -5,6 +5,10 @@ var all_fish  = {}
 var return_button_pos_x = 0
 var return_button_pos_y = 0
 
+const MIN_WORDS := 6
+const LIBRARY_OFFSET_X := -190
+const LIBRARY_OFFSET_Y := -230
+
 var fish_emotions = {
 	"Happy": "Molamola:",
 	"Sad": "Guppy:",
@@ -45,17 +49,6 @@ var caught_fish = {}
 
 @onready var journalling_animation_1_1_: Sprite2D = $"Fisher/JournallingAnimation1(1)"
 
-
-
-
-
-
-
-
-
-
-
-
 func _ready():
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color(0, 0, 0, 0)  # RGBA, last value = alpha = 0 = transparent
@@ -69,7 +62,32 @@ func _ready():
 	return_button_pos_y = return_home.position.y
 
 
-func _on_texture_button_pressed() -> void:
+# Helper methods to keep UI/state changes clean and consistent
+func _play_idle() -> void:
+	animation_player.play("idle")
+
+func _restore_return_button_position() -> void:
+	return_home.position.x = return_button_pos_x
+	return_home.position.y = return_button_pos_y
+
+func _clear_text_edit() -> void:
+	text_edit.text = ""
+	text_edit.set_caret_line(0)
+	text_edit.set_caret_column(0)
+
+func _show_home() -> void:
+	catches_screen.visible = false
+	library_button.visible = true
+	return_home.visible = false
+	journal_box.visible = false
+	fishing_button.visible = true
+	reel_in_button.visible = false
+	length_error_warning.visible = false
+	_play_idle()
+	_restore_return_button_position()
+	_clear_text_edit()
+
+func _show_journaling() -> void:
 	library_button.visible = false
 	text_edit.editable = true
 	journal_box.visible = true
@@ -77,25 +95,27 @@ func _on_texture_button_pressed() -> void:
 	return_home.visible = true
 	reel_in_button.visible = true
 
+func _show_caught_screen() -> void:
+	caught_screen.visible = true
+	caught_reel_button.visible = true
+
+func _show_library_view() -> void:
+	catches_screen.visible = true
+	return_home.visible = true
+	return_home.position.x = return_button_pos_x + LIBRARY_OFFSET_X
+	return_home.position.y = return_button_pos_y + LIBRARY_OFFSET_Y
+
+
+func _on_texture_button_pressed() -> void:
+	_show_journaling()
+
 
 func _on_return_home_pressed() -> void:
-	catches_screen.visible = false
-	library_button.visible = true
-	return_home.visible = false
-	journal_box.visible = false
-	fishing_button.visible = true
-	text_edit.text = ""
-	text_edit.set_caret_line(0)
-	text_edit.set_caret_column(0)
-	reel_in_button.visible = false
-	animation_player.play("idle")
-	length_error_warning.visible = false
-	return_home.position.x = return_button_pos_x
-	return_home.position.y = return_button_pos_y
+	_show_home()
 	
 
-func find_fish(word):
-	var is_true = false
+func find_fish(word: String) -> bool:
+	var is_true := false
 	for fish in fish_emotions.values():
 		if word.contains(fish):
 			is_true = true
@@ -105,7 +125,7 @@ func _on_reel_in_button_pressed() -> void:
 	var words = text_edit.text.split(" ", true)  # true removes empty strings
 	var word_count = words.size()
 	
-	if word_count < 6:
+	if word_count < MIN_WORDS:
 		length_error_warning.visible = true
 	else:
 		length_error_warning.visible = false
@@ -119,63 +139,50 @@ func _on_reel_in_button_pressed() -> void:
 
 
 func _on_http_request_request_completed(result: int, response_code: int, headers: PackedStringArray, body: PackedByteArray) -> void:
-	var json = JSON.parse_string(body.get_string_from_utf8())
-	if json != null:
-		var temp = json["answer"].replace("\n", " ").replace("\n\n", " ")
-		var words_in_answer = temp.split(" ", true)
-		
-		var current_fish = ""
-		var fish_explanation = ""
-		for word in words_in_answer:
-			print(current_fish)
-			if find_fish(word):
-				print("FISH")
-				if current_fish != "":
-					caught_fish[current_fish] = fish_explanation
-				current_fish = word
-				fish_explanation = ""
-			else:
-				fish_explanation += word
-				fish_explanation += " "
-		if current_fish != "":
-					caught_fish[current_fish] = fish_explanation
-		print("====")
-		print(caught_fish)
-		animation_player.play("idle")
-		return_home.visible = false
-		journal_box.visible = false
-		fishing_button.visible = true
-		text_edit.text = ""
-		text_edit.set_caret_line(0)
-		text_edit.set_caret_column(0)
-		reel_in_button.visible = false
-		animation_player.play("idle")
-		length_error_warning.visible = false
-		caught_screen.visible = true
-		caught_reel_button.visible = true
-		var key1 = caught_fish.keys()[on_key]
-		on_key += 1
-		caught_screen.set_fish(key1, caught_fish[key1])
-	else:
-		catches_screen.visible = false
-		library_button.visible = true
-		return_home.visible = false
-		journal_box.visible = false
-		fishing_button.visible = true
-		text_edit.text = ""
-		text_edit.set_caret_line(0)
-		text_edit.set_caret_column(0)
-		reel_in_button.visible = false
-		animation_player.play("idle")
-		length_error_warning.visible = false
-		return_home.position.x = return_button_pos_x
-		return_home.position.y = return_button_pos_y
+	var json_text: String = body.get_string_from_utf8()
+	var parsed: Variant = JSON.parse_string(json_text)
+	var ok_response: bool = response_code >= 200 and response_code < 300
+	var has_answer: bool = parsed is Dictionary and (parsed as Dictionary).has("answer")
+
+	if not ok_response or not has_answer:
+		network_error_warning.text = "Network error. Please try again."
+		network_error_warning.visible = true
+		_show_home()
 		animation_player.play("fade out")
 		journalling_animation_1_1_.texture = load("res://images/Journalling_Animation1.png")
+		return
+
+	# Success path
+	network_error_warning.visible = false
+	var parsed_dict: Dictionary = parsed as Dictionary
+	var temp: String = parsed_dict["answer"].replace("\n", " ").replace("\n\n", " ")
+	var words_in_answer: PackedStringArray = temp.split(" ", true)
+
+	var current_fish: String = ""
+	var fish_explanation: String = ""
+	for word in words_in_answer:
+		if find_fish(word):
+			if current_fish != "":
+				caught_fish[current_fish] = fish_explanation
+			current_fish = word
+			fish_explanation = ""
+		else:
+			fish_explanation += word + " "
+	if current_fish != "":
+		caught_fish[current_fish] = fish_explanation
+	_play_idle()
+	journal_box.visible = false
+	fishing_button.visible = true
+	_clear_text_edit()
+	reel_in_button.visible = false
+	length_error_warning.visible = false
+	_show_caught_screen()
+	var key1 = caught_fish.keys()[on_key]
+	on_key += 1
+	caught_screen.set_fish(key1, caught_fish[key1])
 		
-	
-	
-	
+		
+		
 
 
 func _on_caught_reel_button_pressed() -> void:
@@ -192,10 +199,7 @@ func _on_caught_reel_button_pressed() -> void:
 
 
 func _on_library_button_pressed() -> void:
-	catches_screen.visible = true
-	return_home.visible = true
-	return_home.position.x = return_button_pos_x - 190
-	return_home.position.y = return_button_pos_y - 230
+	_show_library_view()
 	
 	catches_screen.set_library(all_fish)
 	
