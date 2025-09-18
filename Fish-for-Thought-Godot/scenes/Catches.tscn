@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://bdjsfliwpytr2"]
+
+[ext_resource type="Texture2D" uid="uid://og0lst3oh6a6" path="res://images/Group 1.png" id="1_6hnf0"]
+[ext_resource type="Script" path="res://scripts/Catches.gd" id="1_dbotu"]
+[ext_resource type="Texture2D" uid="uid://ch3v8lx1qu6bk" path="res://images/star.png" id="2_ylqjo"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dbotu")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 504.0
+offset_bottom = 893.0
+color = Color(0.764706, 0.898039, 0.905882, 1)
+
+[node name="Group1" type="Sprite2D" parent="."]
+position = Vector2(246, 85)
+scale = Vector2(0.471888, 0.471888)
+texture = ExtResource("1_6hnf0")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 211.0
+offset_bottom = 890.0
+grow_horizontal = 2
+theme_override_constants/h_separation = 80
+columns = 3
+
+[node name="Star3" type="Sprite2D" parent="GridContainer"]
+visible = false
+position = Vector2(107, 103)
+scale = Vector2(0.60241, 0.60241)
+texture = ExtResource("2_ylqjo")

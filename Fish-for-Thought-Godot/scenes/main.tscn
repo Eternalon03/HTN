@@ -1,0 +1,284 @@
+[gd_scene load_steps=23 format=3 uid="uid://chcuss0cx3wdk"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_jpilf"]
+[ext_resource type="Texture2D" uid="uid://dx4lkn4kaisja" path="res://images/IMG_3073.PNG" id="2_7gfrt"]
+[ext_resource type="Texture2D" uid="uid://1q2yvfftm8ja" path="res://images/Journalling_Animation1.png" id="3_4e7yt"]
+[ext_resource type="Texture2D" uid="uid://i1ekdtnbishu" path="res://images/Journalling_Animation2.png" id="4_o36mf"]
+[ext_resource type="Texture2D" uid="uid://ch0vqsrl0y6kg" path="res://images/Journalling_Animation3.png" id="5_mckjv"]
+[ext_resource type="Texture2D" uid="uid://7ta1sigkpfhc" path="res://images/JournalSection.png" id="6_cdwoh"]
+[ext_resource type="Texture2D" uid="uid://bw7chktw5ymq1" path="res://images/JournalBox.png" id="7_p1153"]
+[ext_resource type="FontFile" uid="uid://bwjixo554p8ou" path="res://images/Semi-Casual.ttf" id="8_2xd0y"]
+[ext_resource type="Texture2D" uid="uid://cjn1vvhi4fyyx" path="res://images/Start Fishin Button.png" id="9_0jgu4"]
+[ext_resource type="Texture2D" uid="uid://bduhaslus4x7r" path="res://images/Reel In Button.png" id="10_mlgjh"]
+[ext_resource type="Script" path="res://scripts/HTTPRequest.gd" id="11_tq2sf"]
+[ext_resource type="Texture2D" uid="uid://bvoxaqk6o6n2b" path="res://images/KeyboardIcon.svg" id="12_e2y0j"]
+[ext_resource type="PackedScene" uid="uid://bdjsfliwpytr2" path="res://scenes/Catches.tscn" id="13_0l7tl"]
+[ext_resource type="Texture2D" uid="uid://bare6g8sn2s02" path="res://images/Return Button.png" id="14_32yqt"]
+[ext_resource type="PackedScene" uid="uid://dyxcfggvy5g4h" path="res://scenes/caught.tscn" id="15_e0xsb"]
+
+[sub_resource type="Animation" id="Animation_gr3pd"]
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("4_o36mf")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../NetworkErrorWarning:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ni2wf"]
+resource_name = "fade out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../NetworkErrorWarning:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_fekkg"]
+resource_name = "fisher_reel_animation"
+length = 2.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.2, 1.6, 2, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_4e7yt"), ExtResource("4_o36mf"), ExtResource("5_mckjv"), ExtResource("4_o36mf"), ExtResource("5_mckjv")]
+}
+
+[sub_resource type="Animation" id="Animation_ytn83"]
+resource_name = "fisher_reel_animation_2"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_o36mf"), ExtResource("5_mckjv")]
+}
+
+[sub_resource type="Animation" id="Animation_gse5r"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("JournallingAnimation1(1):texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_4e7yt")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fcg11"]
+_data = {
+"RESET": SubResource("Animation_gr3pd"),
+"fade out": SubResource("Animation_ni2wf"),
+"fisher_reel_animation": SubResource("Animation_fekkg"),
+"fisher_reel_animation_2": SubResource("Animation_ytn83"),
+"idle": SubResource("Animation_gse5r")
+}
+
+[sub_resource type="GDScript" id="GDScript_btd26"]
+script/source = "extends Control # Or whatever your root node type is
+
+## Called when the node enters the scene tree for the first time.
+#func _ready() -> void:
+	#pass # Replace with function body.
+#
+#
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta: float) -> void:
+	#pass
+	
+"
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+script = ExtResource("1_jpilf")
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
+position = Vector2(253.845, 232.5)
+scale = Vector2(0.469819, 0.469819)
+texture = ExtResource("2_7gfrt")
+
+[node name="Fisher" type="Node2D" parent="."]
+
+[node name="JournallingAnimation1(1)" type="Sprite2D" parent="Fisher"]
+position = Vector2(240.078, 183)
+scale = Vector2(0.448692, 0.448692)
+texture = ExtResource("3_4e7yt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Fisher"]
+libraries = {
+"": SubResource("AnimationLibrary_fcg11")
+}
+
+[node name="JournalSection" type="Sprite2D" parent="."]
+position = Vector2(251, 687)
+scale = Vector2(0.480324, 0.480324)
+texture = ExtResource("6_cdwoh")
+
+[node name="JournalBox" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(250.656, 605)
+scale = Vector2(0.519796, 0.351485)
+texture = ExtResource("7_p1153")
+
+[node name="TextEdit" type="TextEdit" parent="JournalBox"]
+anchors_preset = -1
+anchor_left = 0.037
+anchor_top = 0.048
+anchor_right = 0.961
+anchor_bottom = 0.969
+offset_left = -463.281
+offset_top = -598.74
+offset_right = -472.537
+offset_bottom = -628.992
+size_flags_vertical = 4
+theme_override_colors/background_color = Color(1, 1, 1, 0)
+theme_override_fonts/font = ExtResource("8_2xd0y")
+theme_override_font_sizes/font_size = 50
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="FishingButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 404.0
+offset_right = 373.0
+offset_bottom = 510.0
+texture_normal = ExtResource("9_0jgu4")
+ignore_texture_size = true
+stretch_mode = 4
+script = SubResource("GDScript_btd26")
+
+[node name="ReelInButton" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 825.0
+offset_right = 344.0
+offset_bottom = 894.0
+texture_normal = ExtResource("10_mlgjh")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+script = ExtResource("11_tq2sf")
+
+[node name="LengthErrorWarning" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 50.0
+offset_top = 800.0
+offset_right = 460.0
+offset_bottom = 828.0
+theme_override_colors/font_color = Color(1, 0.416603, 0.347925, 1)
+theme_override_colors/font_shadow_color = Color(0.245377, 0.442856, 0.550347, 1)
+theme_override_fonts/font = ExtResource("8_2xd0y")
+theme_override_font_sizes/font_size = 20
+text = "Please Add an Entry Longer than 5 words"
+
+[node name="LibraryButton" type="TextureButton" parent="."]
+modulate = Color(0.613727, 0.910904, 0.820401, 1)
+layout_mode = 0
+offset_left = 12.0
+offset_top = 346.0
+offset_right = 44.0
+offset_bottom = 378.0
+scale = Vector2(1.36019, 0.760186)
+texture_normal = ExtResource("12_e2y0j")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CatchesScreen" parent="." instance=ExtResource("13_0l7tl")]
+visible = false
+layout_mode = 1
+
+[node name="ReturnHome" type="TextureButton" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 353.0
+offset_top = 366.0
+offset_right = 525.0
+offset_bottom = 421.0
+texture_normal = ExtResource("14_32yqt")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="CaughtScreen" parent="." instance=ExtResource("15_e0xsb")]
+visible = false
+layout_mode = 1
+
+[node name="CaughtReelButton" type="TextureButton" parent="CaughtScreen"]
+visible = false
+layout_mode = 0
+offset_left = 130.0
+offset_top = 786.0
+offset_right = 370.0
+offset_bottom = 876.0
+texture_normal = ExtResource("10_mlgjh")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="NetworkErrorWarning" type="Label" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_left = 97.0
+offset_top = 793.0
+offset_right = 397.0
+offset_bottom = 821.0
+theme_override_colors/font_color = Color(0.996078, 0.415686, 0.34902, 1)
+theme_override_colors/font_shadow_color = Color(0.266667, 0.45098, 0.54902, 1)
+theme_override_fonts/font = ExtResource("8_2xd0y")
+theme_override_font_sizes/font_size = 20
+text = "Network Issue, Try Again Later"
+
+[connection signal="pressed" from="FishingButton" to="." method="_on_texture_button_pressed"]
+[connection signal="pressed" from="ReelInButton" to="." method="_on_reel_in_button_pressed"]
+[connection signal="request_completed" from="HTTPRequest" to="." method="_on_http_request_request_completed"]
+[connection signal="pressed" from="LibraryButton" to="." method="_on_library_button_pressed"]
+[connection signal="pressed" from="ReturnHome" to="." method="_on_return_home_pressed"]
+[connection signal="pressed" from="CaughtScreen/CaughtReelButton" to="." method="_on_caught_reel_button_pressed"]

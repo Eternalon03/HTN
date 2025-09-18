@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://dyxcfggvy5g4h"]
+
+[ext_resource type="Script" path="res://scripts/caught.gd" id="1_aye77"]
+[ext_resource type="Texture2D" uid="uid://dq6bufyswhmo6" path="res://images/Star 1.png" id="1_p8fig"]
+[ext_resource type="Texture2D" uid="uid://bw7chktw5ymq1" path="res://images/JournalBox.png" id="2_pkxts"]
+[ext_resource type="Texture2D" uid="uid://tpper1howjfo" path="res://fish/Lionfish.PNG" id="5_lgfk1"]
+[ext_resource type="FontFile" uid="uid://bwjixo554p8ou" path="res://images/Semi-Casual.ttf" id="5_onc52"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aye77")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 504.0
+offset_bottom = 893.0
+color = Color(0.764706, 0.898039, 0.905882, 1)
+
+[node name="Star1" type="Sprite2D" parent="."]
+position = Vector2(251, 186)
+scale = Vector2(0.424192, 0.424192)
+texture = ExtResource("1_p8fig")
+
+[node name="JournalBox" type="Sprite2D" parent="."]
+position = Vector2(251, 548)
+scale = Vector2(0.440678, 0.440678)
+texture = ExtResource("2_pkxts")
+
+[node name="Fish" type="Label" parent="."]
+layout_mode = 0
+offset_top = 16.0
+offset_right = 504.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(0.329412, 0.72549, 0.8, 1)
+theme_override_constants/outline_size = 20
+theme_override_fonts/font = ExtResource("5_onc52")
+theme_override_font_sizes/font_size = 50
+text = "Fish"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="TextEdit" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 62.0
+offset_top = 310.0
+offset_right = 447.0
+offset_bottom = 776.0
+size_flags_vertical = 4
+theme_override_colors/background_color = Color(1, 1, 1, 0)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_readonly_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("5_onc52")
+theme_override_font_sizes/font_size = 22
+editable = false
+wrap_mode = 1
+scroll_smooth = true
+
+[node name="FishSprite" type="Sprite2D" parent="."]
+position = Vector2(246, 182)
+scale = Vector2(0.266686, 0.266686)
+texture = ExtResource("5_lgfk1")
