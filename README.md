@@ -4,6 +4,7 @@ A [fishing themed digital journal](https://youtu.be/_w8JkJIDEeA) that helps you 
 <video src="https://github.com/user-attachments/assets/882406c9-0119-49fb-b94b-9a630faa368e" width="800" /></video>
 
 ### Runner-up for the [Martian API](https://www.withmartian.com) Sponsorship Prize
+Backend requires the Demois Router to run: https://github.com/withmartian/deimos-router
 Original Devpost Submission to Hack the North 2025: [Devpost]([https://youtu.be/_w8JkJIDEeA](https://devpost.com/software/fish-for-thought))
 
 ### Inspiration
