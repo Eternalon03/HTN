@@ -75,9 +75,9 @@ def post_answer():
     data = request.get_json()
 
     prompt = """
-    Happy (molamola), Sad (Guppy), Lonely (Dab), Neutral (Koi), Confident (Lionfish), Stressed (clownfish), Angry (triggerfish), Excited (goldfish) 
+    Happy (Molamola), Sad (Guppy), Lonely (Dab), Neutral (Koi), Confident (Lionfish), Stressed (clownfish), Angry (triggerfish), Excited (goldfish) 
     Using real facts about these fish as well as the emotion assigned to them, tell me which fish I should be assigned based on this journal entry. 
-    You can list multiple fish, but it must be justified. Pick only up to 3. Be creative. 
+    You can list multiple fish, but it must be justified. Make sure each fish name is one word. Pick only up to 3. Be creative. 
     Make sure your entry is formatted like: 
     Fish: reason \n Fish: reason \n
     ...Here is the journal entry: 
